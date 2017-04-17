@@ -37,10 +37,10 @@ func (q *PQueue) Push(value interface{}, priority int64) {
 	node := newNode(value, priority)
 
 	q.Lock()
+	defer q.Unlock()
 	q.nodes = append(q.nodes, node)
 	q.count += 1
 	q.swim(q.size())
-	q.Unlock()
 }
 
 func (q *PQueue) Pop() (interface{}, int64) {
